@@ -5,7 +5,7 @@ class AppSettingService {
 	static scope = "singleton"
 	
     def listSettings() {
-		AppSetting.list()
+		AppSetting.list(sort: "id")
     }
 
 	def save(setting) {
