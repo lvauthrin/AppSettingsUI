@@ -13,8 +13,10 @@ class SettingsController {
 	def save() {
 		def setting = new AppSetting(value: params["settingValue"])
 		setting.id = params["settingName"]
-		appSettingService.save(setting)
-		[setting: setting]
+		def oldSetting = appSettingService.save(setting)
+		render(contentType: 'text/json') {[
+			'setting': oldSetting,
+		]}
 	}
 
 }

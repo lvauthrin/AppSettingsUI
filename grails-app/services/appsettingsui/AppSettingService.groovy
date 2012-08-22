@@ -9,7 +9,10 @@ class AppSettingService {
     }
 
 	def save(setting) {
+		def oldSetting = AppSetting.read(setting.id)
+		oldSetting.discard()
 		setting.merge()
+		return oldSetting
 	}
 
 }

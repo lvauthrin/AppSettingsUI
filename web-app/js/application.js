@@ -1,12 +1,16 @@
 if (typeof jQuery !== 'undefined') {
 	(function($) {
 		$('#spinner').ajaxStart(function() {
-			$(this).fadeIn();
+			$(this).css({opacity: 0, visibility: "hidden"}).animate({opacity: 1.0}, 200);
 		}).ajaxStop(function() {
-			$(this).fadeOut();
+			$(this).css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, 200);
 		});
 
 		var timeoutId;		
+
+		var addAction = function(message) {
+			$('#actions').append('<p class="message">' + message + '</p>');
+		}
 
 		var saveSetting = function($) {
 			return function(element) {
@@ -14,12 +18,19 @@ if (typeof jQuery !== 'undefined') {
 				var settingValue = $(element).val();
 
 				$.post("/AppSettingsUI/settings/save", {settingName: settingName, settingValue: settingValue})
-				    .success(function() { $(element).parent().addClass('required-indicator'); })
-				    .error(function() { $(element).parent().addClass('error'); });				
+				    .success(function(data) {
+				    	$(element).parent().addClass('required-indicator');
+				    	addAction(settingName + ' changed from ' + settingValue + ' to ' + data.setting.value + '.');
+				    }).error(function(data) {
+				    	console.log(data);
+				    	$(element).parent().addClass('error');
+				    	addAction('Error occured: [' + data.status + ']: ' + data.statusText);
+				    });				
 			};
 		}(jQuery);
-
-		$('input[name=settingValue]').on('input', function() {
+		
+		$('input[name=settingValue]').on('input', function(e) {
+			console.log(e);
 			var that = this;
 			window.clearTimeout(timeoutId);
 			timeoutId = window.setTimeout(function() { saveSetting(that); }, 1000);
