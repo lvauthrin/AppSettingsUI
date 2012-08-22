@@ -17,7 +17,7 @@ if (typeof jQuery !== 'undefined') {
  			    var settingName = $(element).data('name');
 				var settingValue = $(element).val();
 
-				$.post("/AppSettingsUI/settings/save", {settingName: settingName, settingValue: settingValue})
+				$.post("save", {settingName: settingName, settingValue: settingValue})
 				    .success(function(data) {
 				    	$(element).parent().addClass('required-indicator');
 				    	addAction(settingName + ' changed from ' + settingValue + ' to ' + data.setting.value + '.');
