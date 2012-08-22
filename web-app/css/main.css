@@ -45,6 +45,7 @@ body {
 	   -moz-box-shadow: 0 0 0.3em #255b17;
 	-webkit-box-shadow: 0 0 0.3em #255b17;
 	        box-shadow: 0 0 0.3em #255b17;
+	font-size: 10pt;
 }
 
 #topBanner {
@@ -257,7 +258,7 @@ label {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 0.25em 0 0;
-	width: 200;
+	width: 350px;
 }
 
 input, select, textarea {
@@ -280,6 +281,10 @@ textarea {
 	height: 150px;
 	overflow: auto; /* IE always renders vertical scrollbar without this */
 	vertical-align: top;
+}
+
+input[type=text] {
+	width: 500px;
 }
 
 input[type=checkbox], input[type=radio] {
