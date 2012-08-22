@@ -8,12 +8,6 @@ if (typeof jQuery !== 'undefined') {
 
 		var timeoutId;		
 
-		var createNotification = function($) {
-			return function(message) {
-				$('#notifications').append('<div class="notification">' + message + '</div>');
-			};
-		}(jQuery);
-
 		var saveSetting = function($) {
 			return function(element) {
  			    var settingName = $(element).data('name');
@@ -24,25 +18,13 @@ if (typeof jQuery !== 'undefined') {
 				    .error(function() { $(element).parent().addClass('error'); });				
 			};
 		}(jQuery);
-		
-		var getInputName = function($) { 
-			return function(input) { 
-				return $(input).attr('name'); 
-			}; 
-		}(jQuery);
 
-		// For each text field, add an unfocus hook which will save the value
-		$('input[name=settingValue]').blur(function() {
-			window.clearTimeout(timeoutId);
-			saveSetting(this);
-		}).keyup(function() {
+		$('input[name=settingValue]').on('input', function() {
 			var that = this;
 			window.clearTimeout(timeoutId);
 			timeoutId = window.setTimeout(function() { saveSetting(that); }, 1000);
 		}).focus(function() {
 			$(this).parent().removeClass('error required-indicator');
 		});
-
-		$('.notification').on("click", function() { $(this).remove(); });
 	})(jQuery);
 }

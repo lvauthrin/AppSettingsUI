@@ -6,7 +6,8 @@
  </head>
 
  <body>
-  <div><h2>Settings</h2>
+  <div>
+   <div id="topBanner"><h2>Settings</h2></div>
    <div id="notifications"></div>
    <fieldset>
     <g:each var="setting" in="${settings}">
